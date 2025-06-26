@@ -1,0 +1,72 @@
+﻿@model IEnumerable<JobPortal.Models.Job>
+@{
+    ViewData["Title"] = "Employer Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Job Postings</h2>
+    <a href="/Employer/PostJob" class="btn btn-success">Post New Job</a>
+</div>
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var job in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@job.Title</h5>
+                        <p class="card-text">@(job.Description.Length > 100 ? job.Description.Substring(0, 100) + "..." : job.Description)</p>
+                        <p class="text-muted">Posted: @job.CreatedAt.ToString("MMM dd, yyyy")</p>
+                        <p class="text-muted"><small>Job ID: @job.Id</small></p> <!-- Debug info -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-info">@job.Applications.Count Applications</span>
+                            <div>
+                                <a href="@Url.Action("Applicants", "Employer", new { jobId = job.Id })" class="btn btn-primary btn-sm">
+                                    View Applicants (@job.Applications.Count)
+                                </a>
+                                <!-- Alternative link format for debugging -->
+                                <a href="/Employer/Applicants/@job.Id" class="btn btn-outline-primary btn-sm ms-1">
+                                    Alt Link
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        You haven't posted any jobs yet. <a href="/Employer/PostJob" class="alert-link">Post your first job</a>
+    </div>
+}
+
+<!-- Debug Information -->
+<div class="mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h6>Debug Information</h6>
+        </div>
+        <div class="card-body">
+            <p><strong>Total Jobs:</strong> @Model.Count()</p>
+            <p><strong>User ID:</strong> @Context.Session.GetInt32("UserId")</p>
+            <p><strong>User Role:</strong> @Context.Session.GetString("UserRole")</p>
+
+            @if (Model.Any())
+            {
+                <p><strong>Job IDs:</strong> @string.Join(", ", Model.Select(j => j.Id))</p>
+                <p><strong>Applications per job:</strong></p>
+                <ul>
+                    @foreach (var job in Model)
+                    {
+                        <li>Job @job.Id (@job.Title): @job.Applications.Count applications</li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

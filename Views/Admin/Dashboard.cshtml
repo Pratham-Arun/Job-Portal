@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h4>@ViewBag.TotalUsers</h4>
+                <p>Total Users</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h4>@ViewBag.TotalJobs</h4>
+                <p>Total Jobs</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h4>@ViewBag.TotalApplications</h4>
+                <p>Applications</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h4>@ViewBag.TotalSkills</h4>
+                <p>Skills</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="/Admin/Users" class="btn btn-primary mb-2 d-block">Manage Users</a>
+                <a href="/Admin/Skills" class="btn btn-success mb-2 d-block">Manage Skills</a>
+            </div>
+        </div>
+    </div>
+</div>

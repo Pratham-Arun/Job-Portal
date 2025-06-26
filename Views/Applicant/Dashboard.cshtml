@@ -1,0 +1,45 @@
+﻿@model IEnumerable<JobPortal.Models.Application>
+@{
+    ViewData["Title"] = "My Applications";
+}
+
+<h2>My Applications</h2>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Match Score</th>
+                    <th>Status</th>
+                    <th>Applied Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var app in Model)
+                {
+                    <tr>
+                        <td>@app.Job.Title</td>
+                        <td>@app.Job.Employer.FirstName @app.Job.Employer.LastName</td>
+                        <td><span class="badge bg-info">@app.MatchScore%</span></td>
+                        <td>
+                            <span class="badge @(app.Status == "Accepted" ? "bg-success" : app.Status == "Rejected" ? "bg-danger" : "bg-warning")">
+                                @app.Status
+                            </span>
+                        </td>
+                        <td>@app.AppliedAt.ToString("MMM dd, yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        You haven't applied to any jobs yet. <a href="/Applicant/Jobs" class="alert-link">Browse available jobs</a>
+    </div>
+}

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<JobPortal.Models.Job>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Job Portal</h1>
+    <p class="lead">Connect talented professionals with great opportunities</p>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4 text-center">
+        <h3>For Job Seekers</h3>
+        <p>Create your profile, showcase your skills, and apply to matching positions.</p>
+        <a href="/Account/Register?role=applicant" class="btn btn-primary">Register as Applicant</a>
+    </div>
+    <div class="col-md-4 text-center">
+        <h3>For Employers</h3>
+        <p>Post jobs, screen candidates, and find the perfect match for your team.</p>
+        <a href="/Account/Register?role=employer" class="btn btn-success">Register as Employer</a>
+    </div>
+    <div class="col-md-4 text-center">
+        <h3>Latest Jobs</h3>
+        <p>@Model.Count() job(s) available</p>
+        <a href="/Applicant/Jobs" class="btn btn-info">Browse Jobs</a>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <h2 class="mt-5">Recent Job Postings</h2>
+    <div class="row">
+        @foreach (var job in Model)
+        {
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@job.Title</h5>
+                        <p class="card-text">@job.Description.Substring(0, Math.Min(100, job.Description.Length))...</p>
+                        <small class="text-muted">Posted by @job.Employer.FirstName @job.Employer.LastName</small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

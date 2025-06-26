@@ -1,0 +1,32 @@
+﻿@model IEnumerable<JobPortal.Models.Job>
+@{
+    ViewData["Title"] = "Browse Jobs";
+}
+
+<h2>Available Jobs</h2>
+
+<div class="row">
+    @foreach (var job in Model)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@job.Title</h5>
+                    <p class="card-text">@job.Description</p>
+                    <p class="text-muted">Posted by @job.Employer.FirstName @job.Employer.LastName</p>
+                    <p class="text-muted"><small>Posted: @job.CreatedAt.ToString("MMM dd, yyyy")</small></p>
+
+                    <form asp-controller="Applicant" asp-action="Apply" method="post" class="d-inline">
+                        <input type="hidden" name="jobId" value="@job.Id" />
+                        <button type="submit" class="btn btn-primary">Apply Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No jobs available at the moment.</div>
+}

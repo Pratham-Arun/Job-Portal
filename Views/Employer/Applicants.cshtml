@@ -1,0 +1,62 @@
+﻿@model IEnumerable<JobPortal.Models.Application>
+@{
+    ViewData["Title"] = "Job Applicants";
+    var job = ViewBag.Job as JobPortal.Models.Job;
+}
+
+<h2>Applicants for "@job?.Title"</h2>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Applicant Name</th>
+                    <th>Email</th>
+                    <th>Match Score</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var app in Model)
+                {
+                    <tr>
+                        <td>@app.Applicant.FirstName @app.Applicant.LastName</td>
+                        <td>@app.Applicant.Email</td>
+                        <td><span class="badge bg-info">@app.MatchScore%</span></td>
+                        <td>@app.AppliedAt.ToString("MMM dd, yyyy")</td>
+                        <td>
+                            <span class="badge @(app.Status == "Accepted" ? "bg-success" : app.Status == "Rejected" ? "bg-danger" : "bg-warning")">
+                                @app.Status
+                            </span>
+                        </td>
+                        <td>
+                            @if (app.Status == "Pending")
+                            {
+                                <form method="post" asp-action="UpdateApplicationStatus" class="d-inline">
+                                    <input type="hidden" name="applicationId" value="@app.Id" />
+                                    <input type="hidden" name="status" value="Accepted" />
+                                    <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                                </form>
+                                <form method="post" asp-action="UpdateApplicationStatus" class="d-inline">
+                                    <input type="hidden" name="applicationId" value="@app.Id" />
+                                    <input type="hidden" name="status" value="Rejected" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">No applications received for this job yet.</div>
+}
+
+<a href="/Employer/Dashboard" class="btn btn-secondary">Back to Dashboard</a>
