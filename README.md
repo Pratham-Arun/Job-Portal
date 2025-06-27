@@ -8,7 +8,6 @@ An ASP.NET MVC web application for job posting, resume screening, and applicant 
   - **Admin:** Manage users, view all jobs, view employer/applicant profiles, manage skills.
   - **Employer:** Post, edit, and delete jobs; view applicants and their profiles; manage company profile.
   - **Applicant:** Register, edit profile, search and apply for jobs, view application status.
-- **Resume Screening:** Automated skill matching between applicant and job requirements.
 - **Job Management:** Employers can specify company name, salary range (in rupees), experience range, employment type (remote/hybrid/on-site), job type (part-time/full-time/internship), and number of vacancies.
 - **Profile Management:** Applicants and employers can edit their profiles.
 - **Password Reset:** Users can reset forgotten passwords.
